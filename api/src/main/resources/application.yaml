@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:8080}
+
+app:
+  message: ${APP_MESSAGE:Hello from the API}
+  version: ${APP_VERSION:dev}
+  cors-origin: ${CORS_ORIGIN:http://localhost:5173,http://localhost:3000}
+
+spring:
+  application:
+    name: seminar-api
+  datasource:
+    # DB_URL can be set by Docker Compose or Azure Container Apps: postgres://user:pass@host:5432/db
+    # If not provided, fallback to local H2 in-memory database for immediate local testing
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:notesdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    root: INFO
+    com.upm.notes: INFO
